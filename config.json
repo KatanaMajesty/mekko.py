@@ -1,9 +1,12 @@
 {
   "settings": {
-    "token": "NzkwNTI0NTA0OTYyMjM2NDUx.X-B3UQ.cDfue-yKpEm45I4WA085zIXgDH8",
+    "token": "NzkwNTI0NTA0OTYyMjM2NDUx.X-B3UQ.LKsYBkWExvDESkF71e2KQB79m3c",
     "prefix": ".",
     "id": 790524504962236451,
-    "server_console": 733265015565713458
+    "name_server": "Chimekko!",
+    "server_console": 733265015565713458,
+    "id_role_moderator": 731116355360915506,
+    "log_moderator": 800752776283160576
   },
   "voice_channel": {
     "id_channel": 790563166546821122,
