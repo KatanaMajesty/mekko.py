@@ -30,11 +30,6 @@ hyperlink==21.0.0
 idna==2.10
 incremental==21.3.0
 isort==5.7.0
-Kivy==2.0.0
-kivy-deps.angle==0.3.0
-kivy-deps.glew==0.3.0
-kivy-deps.sdl2==0.3.1
-Kivy-Garden==0.1.4
 lazy-object-proxy==1.5.2
 macholib==1.14
 mccabe==0.6.1
