@@ -1,4 +1,4 @@
--ymongo==3.11.2
+pymongo==3.11.2
 aiohttp==3.7.3
 altgraph==0.17
 astroid==2.5.1
