@@ -12,16 +12,17 @@ class User(commands.Cog):
         author = ctx.message.author
         emoji = discord.utils.get(ctx.message.guild.emojis, name='m2_cateeee')
         channel = ctx.message.channel
-        avatar = member.avatar_url
         try:
 
             if member is None:
-                embedVar = discord.Embed(description=f'{emoji}  Ваша аватарка, **{author.display_name}**', colour=discord.Colour.blue())
-                embedVar.set_image(url=f'{avatar}')
+                author_avatar = author.avatar_url
+                embedVar = discord.Embed(description=f'{emoji}  Ваша аватарка, **{author.display_name}**', colour=discord.Colour.blurple())
+                embedVar.set_image(url=f'{author_avatar}')
                 await channel.send(embed=embedVar)
 
             else:
-                embedVar = discord.Embed(description=f'{emoji}  Аватарка пользователя **{member.display_name}**', colour=discord.Colour.blue())
+                avatar = member.avatar_url
+                embedVar = discord.Embed(description=f'{emoji}  Аватарка пользователя **{member.display_name}**', colour=discord.Colour.blurple())
                 embedVar.set_image(url=f'{avatar}')
                 await channel.send(embed=embedVar)
                 

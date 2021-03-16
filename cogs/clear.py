@@ -17,6 +17,8 @@ class User(commands.Cog):
             await ctx.send(f"`Было очищенно сообщений: {amount}`", delete_after=3)
        
         except:
-            return
+            embed = discord.Embed(title='Ошибка!',description=f'У тебя нет прав!', colour= discord.Color.red())
+            await ctx.send(embed=embed)
+
 def setup(client):
     client.add_cog(User(client))

@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 import discord
 from discord.ext import commands
 from pymongo import MongoClient
@@ -14,7 +15,7 @@ class User(commands.Cog):
         self.cluster = MongoClient("mongodb+srv://Bloodycat:PN1gkXf8H6Yf5X1P@chimekko-cluster.imrbn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
         self.mute = self.cluster.Chimekko_db.mute
 
-    @commands.command(aliases=['m'])
+    @commands.command(aliases=['m','Mute'])
     async def mute(self, ctx, member: discord.Member = None, time = None, *, reason = None):
         prefix = config["settings"]["prefix"]
         channel = self.client.get_channel(config['settings']['server_console'])
@@ -40,8 +41,7 @@ class User(commands.Cog):
                     except:
                         continue
 
-                embed = discord.Embed(description = f'**Мут пользователя\n\nУчастников в муте: `{mute_in_bd}`\nПосмотреть участника:\n`{prefix}mutes (участник)`\n\nПример команды:\n`{prefix}mute (участник) (время) (причина)`**', color = 0x2f3136)
-                embed.set_thumbnail(url = self.client.user.avatar_url)
+                embed = discord.Embed(title='Помощь "Мут"', description=f'Укажи - **[пользователь] [время] [причина]**\nПример: **{prefix}mute @Люк 1h Спам**', colour = discord.Colour.blurple())
                 await ctx.send(embed = embed)
 
                 return
@@ -54,7 +54,7 @@ class User(commands.Cog):
 
 
             if time is None:
-                embed = discord.Embed(description = f'**Ошибка ввода команды!\n`{prefix}mute (участник) (время) (причина)`\n\nПример:\n`{prefix}mute @member#1234 10m/20h/30d причина`**', color = 0x2f3136)
+                embed = discord.Embed(title='Помощь "Мут"', description=f'Укажи - **[пользователь] [время] [причина]**\nПример: **{prefix}mute @Люк 1h Спам**', colour = discord.Colour.blurple())
                 await ctx.send(embed = embed)
                     
                 return
@@ -65,12 +65,12 @@ class User(commands.Cog):
                         if info == 'reason':
                             continue
                         if info == 'data':
-                            embed = discord.Embed(description = f'**Этот участник уже в муте!**', color = 0x2f3136)
+                            embed = discord.Embed(title='Ошибка!',description = f'**Этот участник уже имеет мут!**', colour = discord.Colour.red())
                             await ctx.send(embed = embed)
 
                             return
                 except:
-                    embed = discord.Embed(description = f'**В базе данных произошла ошибка, повторите запрос.**', color = 0x2f3136)
+                    embed = discord.Embed(description = f'**В базе данных произошла ошибка, повторите запрос.**', colour = discord.Colour.red())
                     await ctx.send(embed = embed)
 
                     return
@@ -86,7 +86,7 @@ class User(commands.Cog):
             elif time[-1] == "d" or time[-1] == "D":
                 sec = int(time[:-1])*60*60*24
             else:
-                embed = discord.Embed(description = f'**Ошибка ввода команды!\n`{prefix}mute (участник) (время) (причина)`\n\nПример:\n`{prefix}mute @member#1234 10m/20h/30d причина`**', color = 0x2f3136)
+                embed = discord.Embed(title='Помощь "Мут"', description=f'Укажи - **[пользователь] [время] [причина]**\nПример: **{prefix}mute @Люк 1h Спам**', colour = discord.Colour.blurple())
                 await ctx.send(embed = embed)
 
                 return
@@ -107,15 +107,21 @@ class User(commands.Cog):
 
                     ava_moderator = author.avatar_url
                     ava_member = member.avatar_url
-                    embed1 = discord.Embed(title='Логирование',description=f'{member.mention} успешно замучен на игровом сервере\nПричина: **{reason}**\nДлительность: **{time}** \n Дата мута {date}', colour=discord.Colour.red())
+                    embed1 = discord.Embed(title='Логирование',description=f'{member.mention} успешно замучен на Дискорд и игровом сервере\nПричина: **{reason}**\nДлительность: **{time}** \n Дата мута {date}', colour = discord.Colour.red())
                     embed1.set_thumbnail(url=ava_member)
                     embed1.set_footer(text=f"Модератор: {author.display_name}", icon_url=ava_moderator)
                     await channelmod.send(embed=embed1)
 
-                    embed = discord.Embed(description = f'**Мут выдан успешно!\n\n{member.mention} был замучен на `{seco}`\nМут будет снята: `{date}`\n\nПричина: `{reason}`**', color = 0x2f3136)
+                    embed = discord.Embed(description = f'{member.mention} успешно замучен на Дискорд и игровом сервере\nПричина: **{reason}**\nМут будет снят: **{date}**', colour = discord.Colour.red())
+                    embed.set_footer(text=f"Модератор: {author.display_name}", icon_url=ava_moderator)
                     await ctx.send(embed = embed)
+
+                    embed = discord.Embed(title='Мут',description = f'{member.mention} ты получил мут на Дискорд и игровом сервере!\nДлительность: **{seco}**\nМут будет снят **{date}**\nПричина: **{reason}**', colour = discord.Colour.red())
+                    embed.set_footer(text=f"Модератор: {author.display_name}", icon_url=ava_moderator)
+                    await member.send(embed = embed)
+
         else:
-            embed = discord.Embed(description=f'**у вас нет прав!**')
+            embed = discord.Embed(title='Ошибка!',description=f'У тебя нет прав!', colour= discord.Color.red())
             await ctx.send(embed=embed)
 
     @commands.command(aliases=['ms'])
@@ -131,13 +137,13 @@ class User(commands.Cog):
 
                 date = datetime.strptime(date, '%y-%m-%d %H:%M:%S.%f').strftime("%Y.%m.%d в %H:%M")
             
-                embed = discord.Embed(description = f"**Мут пользователя\n\nЗамучен: {author.mention}\nПричина: `{reas}`\nСрок заканчивается: `{date}`**", color = 0x2f3136)
+                embed = discord.Embed(title='Мут пользователя',description = f"Участник: {author.mention}\nПричина: **{reas}**\nСрок заканчивается: **{date}**", colour = discord.Colour.red())
                 embed.set_thumbnail(url = author.avatar_url)
                 await ctx.send(embed = embed)
 
                 return
             except:
-                embed = discord.Embed(description = f"**{author.mention} не в муте**", color = 0x2f3136)
+                embed = discord.Embed(description = f"**{author.mention} не в муте**", colour = discord.Colour.red())
                 await ctx.send(embed = embed)
 
         else:
@@ -149,20 +155,16 @@ class User(commands.Cog):
 
                 date = datetime.strptime(date, '%y-%m-%d %H:%M:%S.%f').strftime("%Y.%m.%d в %H:%M")
             
-                embed = discord.Embed(description = f"**Мут пользователя\n\nЗамучен: {member.mention}\nПричина: `{reas}`\nСрок заканчивается: `{date}`**", color = 0x2f3136)
-                embed.set_thumbnail(url = member.avatar_url)
+                embed = discord.Embed(title='Мут пользователя',description = f"Участник: {author.mention}\nПричина: **{reas}**\nСрок заканчивается: **{date}**", colour = discord.Colour.red())
+                embed.set_thumbnail(url = author.avatar_url)
                 await ctx.send(embed = embed)
 
                 return
 
             except:
-                embed = discord.Embed(description = f"**{member.mention} не в муте**", color = 0x2f3136)
+                embed = discord.Embed(title='Ошибка',description = f"Указанный пользователь не в муте!", colour = discord.Colour.red())
                 await ctx.send(embed = embed)
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        content = message.content
-        if '<@!227117061011144704>' in content or '<@!385425624082284544>' in content:
-            await message.add_reaction("💖")
+
 
     @commands.command(aliases=['unm'])
     async def unmute(self, ctx, member: discord.Member = None):
@@ -174,7 +176,7 @@ class User(commands.Cog):
         ava_member = member.avatar_url
 
         if member is None:
-            embed = discord.Embed(description = f"**Пользователь не указан!**", color = 0x2f3136)
+            embed = discord.Embed(title='Ошибка',description = f"**Пользователь не указан!**", colour = discord.Colour.red())
             await ctx.send(embed = embed)
             
             return
@@ -189,16 +191,16 @@ class User(commands.Cog):
                 self.mute.update({"_id": member.id}, {"$unset": {'data': 1 }}) 
                 self.mute.update({"_id": member.id}, {"$pull": {'data': 1}})
 
-                embed1 = discord.Embed(title='Логирование', description=f'{member.mention} мут успешно снят на игровом сервере\n Дата снятия мута {date}',colour=discord.Colour.red())
+                embed1 = discord.Embed(title='Логирование', description=f'{member.mention} мут успешно снят на игровом сервере\n Дата снятия мута {date}',colour = discord.Colour.red())
                 embed1.set_thumbnail(url=ava_member)
                 embed1.set_footer(text=f"Модератор: {author.display_name}", icon_url=ava_moderator)
                 await channelmod.send(embed=embed1)
 
-                embed2 = discord.Embed(title='Снятие мута',description=f'{member.mention}, мут снят на игровом сервере',colour=discord.Colour.red())
+                embed2 = discord.Embed(title='Снятие мута',description=f'{member.mention}, мут снят на игровом сервере',colour=discord.Colour.green())
                 embed2.set_footer(text=f"Модератор: {author.display_name}", icon_url=ava_moderator)
                 await member.send(embed=embed2)
 
-                embed3 = discord.Embed(title='Мут', description=f'{member.mention} мут успешно снят на игровом сервере', colour=discord.Colour.red())
+                embed3 = discord.Embed(title='Мут', description=f'{member.mention} мут успешно снят на игровом сервере', colour=discord.Colour.green())
                 embed3.set_footer(text=f"Модератор: {author.display_name}", icon_url=ava_moderator)
                 await ctx.send(embed=embed3)
 
@@ -206,7 +208,7 @@ class User(commands.Cog):
 
                 return
 
-        embed = discord.Embed(description = f"**{member.mention} не в муте**", color = 0x2f3136)
+        embed = discord.Embed(description = f"**{member.mention} не в муте**", colour = discord.Colour.red())
         await ctx.send(embed = embed)        
 
     @commands.Cog.listener()
@@ -240,7 +242,7 @@ class User(commands.Cog):
                                 self.mute.update({"_id": member.id}, {"$unset": {'data': 1 }}) 
                                 self.mute.update({"_id": member.id}, {"$pull": {'data': 1}})
 
-                                embed = discord.Embed(description=f"{member.mention}, с Вас сняли мут!\nПросим больше не нарушать правила сервера💖", colour=discord.Colour.light_gray())
+                                embed = discord.Embed(description=f"{member.mention}, длительность мута истекла!\nПросим больше не нарушать правила сервера 💖", colour=discord.Colour.green())
                                 await member.send(embed = embed)
 
                                 embed1 = discord.Embed(title='Логирование', description=f'{member.mention} мут успешно снят на игровом сервере\n Дата снятия мута {date}',colour=discord.Colour.red())

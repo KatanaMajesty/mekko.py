@@ -11,7 +11,7 @@ class User(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(aliases=['minewarn', 'warnmine', 'mwarn', 'warnm', 'Warnm', 'Mwarn'])
+    @commands.command(aliases=['warn', 'Warn'])
     async def mWarn(self, ctx, member:discord.Member = None, *, reason = None):
         prefix = config["settings"]["prefix"]
         role = discord.utils.find(lambda r: r.id == config["settings"]["id_role_moderator"], ctx.guild.roles)
@@ -47,7 +47,7 @@ class User(commands.Cog):
             await channelmod.send(embed=embed3)
             await channel.send(f'warn {member.display_name} {reason}')
         else:
-            embed = discord.Embed(description=f'**у вас нет прав!**')
+            embed = discord.Embed(title='Ошибка!',description=f'У тебя нет прав!', colour= discord.Color.red())
             await ctx.send(embed=embed)
 
 def setup(client):

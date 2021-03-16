@@ -48,7 +48,7 @@ class User(commands.Cog):
             await channel.send(f'discord unlink {member.id}')
 
         else:
-            embed = discord.Embed(description=f'**у вас нет прав!**')
+            embed = discord.Embed(title='Ошибка!',description=f'У тебя нет прав!', colour= discord.Color.red())
             await ctx.send(embed=embed)
 
 def setup(client):

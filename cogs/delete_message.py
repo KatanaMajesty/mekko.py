@@ -15,23 +15,23 @@ class User(commands.Cog):
         author = message.author
         content = message.content
         channel = message.channel
-        bot = self.client.get_user(config["settings"]["id"])
-        try:
-            if author == bot:
-                return
-            if content[0] == config["settings"]["prefix"]:
-                return
-            if channel.id == config['del_message']['id_channel']:
-                return
-            if channel.id == config['application']['id_channel_1']:
-                return
-            time = datetime.datetime.now().strftime("%Y.%m.%d в %H.%M")
-            channel2 = self.client.get_channel(config['del_message']['id_channel'])
-            embed = discord.Embed(title = f'Сообщение удалено', description = f"Канал: `{channel}`\nАвтор:{author.mention}\n\nСообщение: `{content}`", colour=discord.Colour.red())
-            embed.set_footer(text = f"Дата: {time}")
-            await channel2.send(embed = embed)
-        
-        except:
+        avatar_author = author.avatar_url
+
+        if message.author.bot:
             return
+        if content[0] == config["settings"]["prefix"]:
+            return
+        if channel.id == config['del_message']['id_channel']:
+            return
+        if channel.id == config['application']['id_channel']:
+            return
+        time = datetime.datetime.now().strftime("%Y.%m.%d в %H.%M")
+        channel2 = self.client.get_channel(config['del_message']['id_channel'])
+        embed = discord.Embed(title = f'Удаление', description = f"Канал: <#{channel.id}>\nАвтор: {author.mention}\n\nСообщение: `{content}`", colour=discord.Colour.red())
+        embed.set_footer(text=f"Дата: {time}" , icon_url=avatar_author)
+        await channel2.send(embed = embed)
+        return
+        
+
 def setup(client):
     client.add_cog(User(client))

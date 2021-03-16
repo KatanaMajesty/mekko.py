@@ -1,12 +1,16 @@
 {
   "settings": {
-    "token": "NzkwNTI0NTA0OTYyMjM2NDUx.X-B3UQ.LKsYBkWExvDESkF71e2KQB79m3c",
+    "token": "NzkwNTI0NTA0OTYyMjM2NDUx.X-B3UQ.Rh58i9LBI_sxRcOPhqPekCK5hfY",
     "prefix": ".",
     "id": 790524504962236451,
     "name_server": "Chimekko!",
     "server_console": 733265015565713458,
     "id_role_moderator": 731116355360915506,
     "log_moderator": 800752776283160576
+  },
+  "TC": {
+    "id_channel": 821380050753683456,
+    "id_message": 821419020586713108
   },
   "voice_channel": {
     "id_channel": 790563166546821122,
@@ -23,6 +27,9 @@
   },
   "edit_message": {
     "id_channel": 817692376188977192
+  },
+  "moderatoin": {
+    "id_channel_screen": 732193377491091509
   },
   "application": {
     "start_message": 817727121623089153,

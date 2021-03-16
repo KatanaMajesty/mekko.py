@@ -11,7 +11,7 @@ class User(commands.Cog):
     def __init__(self, client):
         self.client = client
         
-    @commands.command(aliases=['minekick', 'kickmine', 'mkick', 'kickm', 'Kickm', 'Mkick'])
+    @commands.command(aliases=['kick', 'Kick'])
     async def mKick(self, ctx, member: discord.Member = None, *, reason = None):
         prefix = config["settings"]["prefix"]
         channel = self.client.get_channel(config['settings']['server_console'])
@@ -52,8 +52,9 @@ class User(commands.Cog):
             await member.kick()
 
         else:
-            embed = discord.Embed(description=f'**у вас нет прав!**')
+            embed = discord.Embed(title='Ошибка!',description=f'У тебя нет прав!', colour= discord.Color.red())
             await ctx.send(embed=embed)
+
 
 def setup(client):
     client.add_cog(User(client))
