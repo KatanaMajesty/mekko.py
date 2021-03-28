@@ -175,7 +175,7 @@ class User(commands.Cog):
         if author.id == bot.id:
             return
         if channel.id == 731078569136226375:
-		    await message.delete()
+            await message.delete()
         try:
             channels = message.guild.text_channels 
             if channel in channels:
