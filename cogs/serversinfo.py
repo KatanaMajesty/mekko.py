@@ -47,7 +47,7 @@ class User(commands.Cog):
             return
         else:
             urv = ctx.guild.icon_url
-            embed = discord.Embed(title='Информация о сервере',description=f'**• Дискорд сервер**\nНазвание **{ctx.guild.name}**\nСоздан {ctx.guild.created_at.strftime("**%Y.%m.%d** в **%H:%M**")}\nВсего **{ctx.guild.member_count}** участников\n\n**• Игровой сервер**\nСтатус: **Оффлайн**\nIP сервера - **join.chimekko.site**',colour=discord.Colour.blurple())
+            embed = discord.Embed(title='Информация о сервере',description=f'**• Дискорд сервер**\nНазвание **{ctx.guild.name}**\nСоздан {ctx.guild.created_at.strftime("**%Y.%m.%d** в **%H:%M**")}\nВсего **{ctx.guild.member_count}** участников\n\n**• Игровой сервер**\nСтатус: **Закрыт**',colour=discord.Colour.blurple())
             embed.set_thumbnail(url=urv)
             await ctx.send(embed=embed)
 
