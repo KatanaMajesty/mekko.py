@@ -2,8 +2,6 @@
 import discord
 from discord.ext import commands
 import json
-import mojang
-from mojang import MojangAPI
 import requests
 import datetime
 
