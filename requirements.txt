@@ -1,7 +1,10 @@
 async-timeout==3.0.1
 asyncio==3.4.3
 asyncio-dgram==1.2.0
-discord.py==1.6.0
+discord-buttons==0.5
+discord-components==0.5.3
+discord-py-slash-command==1.2.2
+discord.py==1.7.2
 dnspython==2.1.0
 mcstatus==5.1.1
 mctools==1.1.0
